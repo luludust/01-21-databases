@@ -4,7 +4,7 @@ package edu.uw.fragmentdemo;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,14 +102,12 @@ public class MovieFragment extends Fragment {
                 Log.i(TAG, "selected: " + movie.toString());
 
                 //swap the fragments to show the detail
-                ((OnMovieSelectionListener)getActivity()).onMovieSelected(movie);
+                ((OnMovieSelectionListener) getActivity()).onMovieSelected(movie);
 
             }
         });
 
-
         return rootView;
-
     }
 
     /**

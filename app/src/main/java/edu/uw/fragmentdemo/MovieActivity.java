@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,39 +38,80 @@ public class MovieActivity extends AppCompatActivity implements MovieFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentManager manager = getFragmentManager();
-
-        FragmentTransaction ft = manager.beginTransaction();
-        ft.add(R.id.container, new MovieFragment());
-        ft.commit();
-
+        showSearchFragment();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                showSearchFragment();
+                return true;
+            case R.id.action_favorites:
+                showFavoritesFragment();
+                return true;
+            case R.id.action_test:
+                runTest();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showSearchFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new MovieFragment())
+                .commit();
+    }
+
+    private void showFavoritesFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new FavoriteFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    //a method to test something!
+    private void runTest() {
+        Log.v(TAG, "Test button clicked!");
+
+    }
 
     @Override
     public void onMovieSelected(Movie movie) {
         DetailFragment detail = new DetailFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString("title", movie.toString());
-        bundle.putString("imdb", movie.imdbId);
+        bundle.putString("title", movie.title);
+        bundle.putInt("year", movie.year);
+        bundle.putString("imdbId", movie.imdbId);
+        bundle.putString("posterUrl", movie.posterUrl);
 
         detail.setArguments(bundle);
 
         //swap the fragments
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, detail)
                 .addToBackStack(null)
                 .commit();
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    //for support class Activity
-    public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount() != 0) {
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-    }
+    //for non-support Activity
+    //    public void onBackPressed() {
+    //        if(getFragmentManager().getBackStackEntryCount() != 0) {
+    //            getFragmentManager().popBackStack();
+    //        } else {
+    //            super.onBackPressed();
+    //        }
+    //        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    //    }
 }
