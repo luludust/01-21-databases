@@ -35,6 +35,8 @@ public class MovieActivity extends AppCompatActivity implements MovieFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        
+
         FragmentManager manager = getFragmentManager();
 
         FragmentTransaction ft = manager.beginTransaction();
