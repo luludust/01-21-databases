@@ -5,10 +5,10 @@
     tools:context="edu.uw.fragmentdemo.FavoriteFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Favorites" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="Favorites" />-->
 
     <ListView
         android:id="@+id/favoriteList"
